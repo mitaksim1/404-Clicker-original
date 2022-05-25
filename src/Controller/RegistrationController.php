@@ -46,8 +46,11 @@ class RegistrationController extends AbstractController
      * 
      */
     public function register(
-        Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager, LevelRepository $levelRepository): Response
-    {
+        Request $request,
+        UserPasswordHasherInterface $userPasswordHasher,
+        EntityManagerInterface $entityManager,
+        LevelRepository $levelRepository
+    ): Response {
         if ($this->getUser()) {
             return $this->render('home/index.html.twig');
         }
@@ -64,7 +67,7 @@ class RegistrationController extends AbstractController
                 $this->addFlash('error', 'Utilisateur et/ou email déjà enregistré');
                 return $this->redirectToRoute('inscription');
             }
-            
+
             // encode the plain password
             $user->setPassword(
                 $userPasswordHasher->hashPassword(
@@ -93,7 +96,7 @@ class RegistrationController extends AbstractController
                     ->htmlTemplate('registration/confirmation_email.html.twig')
             );
             // do anything else you need here, like send an email
-           $this->addFlash('success', 'Vous êtes bien inscrit, merci de bien regarder vos mails pour faire la vérification.');
+            $this->addFlash('success', 'Vous êtes bien inscrit, merci de bien regarder vos mails pour faire la vérification.');
             return $this->redirectToRoute('home');
         }
 
@@ -132,5 +135,4 @@ class RegistrationController extends AbstractController
 
         return $this->redirectToRoute('inscription');
     }
-
 }
